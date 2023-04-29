@@ -1,0 +1,36 @@
+$media-mobile: "only screen and (max-width : 600px)";
+
+.container{
+    min-height: calc(100vh - 4.375rem);
+    max-height: calc(100vh - 4.375rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container{
+    background-color: rgb(255, 255, 255);
+    padding: 2.875rem 3.25rem;
+    max-width: 29.25rem;
+
+    @media #{$media-mobile} {
+        padding: 1.875rem 2.25rem;
+        max-width: 20rem;
+    }  
+}
+.full-width {
+    width: 100%;
+}
+h1{
+    margin-bottom: 2rem;
+
+    @media #{$media-mobile} {
+        margin: 1rem 0;
+        font-size: large;
+      }
+}
+
+.space{
+    margin-bottom: 2rem;
+}

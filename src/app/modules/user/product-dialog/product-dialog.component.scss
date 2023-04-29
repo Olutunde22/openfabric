@@ -1,0 +1,29 @@
+$media-mobile: "only screen and (max-width : 600px)";
+$media-tablet: "only screen and (max-width : 768px)";
+
+
+.form-container{
+   width: 100%;
+}
+
+.grid-2{
+    display: grid;
+    width: 100%;
+    gap: 1rem; 
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    @media #{$media-mobile} {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+}
+
+.full-width{
+    width: 100%;
+}
+
+.space{
+    margin: 1.5rem 0;
+    @media #{$media-mobile} {
+        margin: 1rem 0;
+    }
+}

@@ -1,0 +1,46 @@
+<div class="container">
+
+    <div class="image-container">
+        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    </div>
+
+
+    <div class="details-container">
+
+        <h2>Lorem ipsum dolor, sit amet consectetur, adipisicing elit.</h2>
+        <p>By <span class="bold">Olutunde</span></p>
+
+        <div class="flex">
+
+            <div class="flex">
+                <span>$</span>
+                <span class="price">{{ 25 * selected }}</span>
+            </div>
+
+
+            <p style="color: green;" class="bold">Save 12%</p>
+
+        </div>
+
+        <p class="description">Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Vitae
+            exercitationem porro saepe ea harum corrupti vero id laudantium enim, libero blanditiis expedita
+            cupiditate a est.</p>
+
+        <div>
+
+            <mat-form-field>
+                <mat-label>Quantity</mat-label>
+                <mat-select [(value)]="selected">
+                    <mat-option value=1>1</mat-option>
+                    <mat-option value=2>2</mat-option>
+                    <mat-option value=3>3</mat-option>
+                    <mat-option value=4>4</mat-option>
+                    <mat-option value=5>5</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+
+
+</div>

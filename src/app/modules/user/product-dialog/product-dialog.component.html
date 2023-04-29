@@ -1,0 +1,44 @@
+<h1 mat-dialog-title><strong>{{action}} Product</strong></h1>
+<div mat-dialog-content>
+    <form [formGroup]="productForm" class="form-container" *ngIf="action != 'Delete'; else elseTemplate">
+
+        <div class="grid-2 space">
+            <mat-form-field class="full-width">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput placeholder="Name" formControlName="productName">
+                <mat-hint>E.g Apple, Orange</mat-hint>
+                <mat-error *ngIf="productForm.get('productName')?.hasError('required')">Enter a product name</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Price</mat-label>
+                <input type="number" matInput placeholder="Price" formControlName="productPrice">
+                <mat-hint>E.g $1</mat-hint>
+                <mat-error *ngIf="productForm.get('productPrice')?.hasError('required')">Enter a price</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="space-2">
+            <mat-form-field class="full-width">
+                <mat-label>Image url</mat-label>
+                <input type="text" matInput placeholder="Product Image" formControlName="productImageUrl">
+                <mat-error *ngIf="productForm.get('productImageUrl')?.hasError('required')">Enter an image
+                    url</mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Product Image" formControlName="productDescription" rows="6"></textarea>
+            <mat-error *ngIf="productForm.get('productDescription')?.hasError('required')">Enter a description for the
+                product</mat-error>
+        </mat-form-field>
+    </form>
+    <ng-template #elseTemplate class="space-2">
+        Are you sure you want to delete <b>{{productForm.value.productName |json}}</b>?
+    </ng-template>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="doAction()">{{action}}</button>
+        <button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+    </div>
+</div>
