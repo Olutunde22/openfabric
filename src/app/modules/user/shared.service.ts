@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 export interface ProductData {
   event: string;
@@ -16,31 +16,23 @@ export interface ProductData {
 })
 export class SharedService {
 
-  private subject = new Subject<ProductData>();
+  private product = new Subject<ProductData>();
   private errorMessage = new Subject<string>();
   private loading = new Subject<boolean>();
 
+  product$ = this.product.asObservable()
+  errorMessage$ = this.errorMessage.asObservable()
+  loading$ = this.loading.asObservable()
+
   sendProductEventData(productData: ProductData) {
-    this.subject.next(productData);
-  }
-  getProductEventData(): Observable<ProductData> {
-    return this.subject.asObservable();
+    this.product.next(productData);
   }
 
   sendErrorMessage(errorMessage: string) {
     this.errorMessage.next(errorMessage)
   }
 
-  getErrorMessage() {
-    return this.errorMessage.asObservable()
-  }
-
   setLoading(loading: boolean) {
     this.loading.next(loading)
   }
-
-  getLoading() {
-    return this.loading.asObservable()
-  }
-
 }

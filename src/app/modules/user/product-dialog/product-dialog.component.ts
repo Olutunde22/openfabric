@@ -38,11 +38,11 @@ export class ProductDialogComponent implements OnInit {
     this.productForm.patchValue({
       ...this.productData
     })
-    this.sharedService.getErrorMessage().subscribe(message => {
+    this.sharedService.errorMessage$.subscribe(message => {
       this.errorMessage = message
     })
 
-    this.sharedService.getLoading().subscribe(loading => {
+    this.sharedService.loading$.subscribe(loading => {
       this.loading = loading
     })
   }

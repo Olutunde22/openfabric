@@ -12,7 +12,6 @@ import { AuthService } from './services/auth.service';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-  private isRefreshing = false;
   constructor(private authService: AuthService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

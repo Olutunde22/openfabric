@@ -13,4 +13,12 @@ describe('SharedService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should emit error message', () => {
+    service.sendErrorMessage('Error')
+    service.errorMessage$.subscribe(message => {
+      expect(message).toBe('Error')
+    })
+  })
+
 });

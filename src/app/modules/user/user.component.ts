@@ -41,7 +41,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true
     this.getProducts()
-    this.sharedService.getProductEventData().subscribe((data) => {
+    this.sharedService.product$.subscribe((data) => {
       this.performAction(data)
     })
   }
