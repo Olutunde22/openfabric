@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,6 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup
+  loading: boolean = false
+  error: boolean = false
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
@@ -20,13 +23,26 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', { validators: [Validators.email, Validators.required] }],
       password: ['', { validators: [Validators.required] }],
-    }, { updateOn: 'blur' })
+    })
   }
 
   login(): void {
-    if (this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)) {
-      this.router.navigateByUrl('/dashboard')
-      this.loginForm.reset()
-    }
+    this.loading = true
+    this.error = false
+    this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe({
+      next: (loggedIn) => {
+        this.authService.addToken(loggedIn.data)
+        this.router.navigateByUrl('/dashboard')
+        this.loginForm.reset()
+        this.loading = false
+      },
+      error: () => {
+        this.error = true
+        this.loading = false
+        setTimeout(() => {
+          this.error = false
+        }, 3000)
+      },
+    })
   }
 }

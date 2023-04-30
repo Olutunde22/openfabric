@@ -1,20 +1,19 @@
-<div class="container">
+<div class="container" *ngIf="!loading">
 
     <div class="image-container">
-        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img src={{productDetails.imageUrl}} alt={{productDetails.name}}>
     </div>
-
 
     <div class="details-container">
 
-        <h2>Lorem ipsum dolor, sit amet consectetur, adipisicing elit.</h2>
+        <h2>{{productDetails.name}}</h2>
         <p>By <span class="bold">Olutunde</span></p>
 
         <div class="flex">
 
             <div class="flex">
                 <span>$</span>
-                <span class="price">{{ 25 * selected }}</span>
+                <span class="price">{{ productDetails.price * selected }}</span>
             </div>
 
 
@@ -22,9 +21,7 @@
 
         </div>
 
-        <p class="description">Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Vitae
-            exercitationem porro saepe ea harum corrupti vero id laudantium enim, libero blanditiis expedita
-            cupiditate a est.</p>
+        <p class="description">{{productDetails.description}}</p>
 
         <div>
 
@@ -43,4 +40,8 @@
     </div>
 
 
+</div>
+
+<div *ngIf="loading" class="loading">
+    <mat-progress-spinner mode="indeterminate" value="primary" />
 </div>

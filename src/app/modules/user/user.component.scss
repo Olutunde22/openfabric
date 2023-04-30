@@ -21,3 +21,13 @@ table{
       }
     
 }
+
+.image-cell{
+    padding: 0.5rem 1rem;
+}
+.loading{
+    height: calc(100vh - 350px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

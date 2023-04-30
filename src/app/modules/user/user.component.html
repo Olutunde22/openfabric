@@ -3,24 +3,34 @@
     <div class="button-container">
         <button mat-raised-button color="primary" (click)="openDialog('Create')">Add New Product</button>
     </div>
-    <table mat-table [dataSource]="dataSource">
+
+    <table mat-table [dataSource]="dataSource" *ngIf="!loading">
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <!-- Image Column -->
         <ng-container matColumnDef="imageUrl">
-            <th mat-header-cell *matHeaderCellDef>Image Url </th>
-            <td mat-cell *matCellDef="let element"> {{element.productImageUrl}} </td>
+            <th mat-header-cell *matHeaderCellDef>Image</th>
+            <td mat-cell *matCellDef="let element" class="image-cell"> <img src={{element.imageUrl}} height="50"
+                    alt={{element.name}} />
+            </td>
+        </ng-container>
+
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element"> {{element.description.substring(0,50)}} </td>
         </ng-container>
 
         <!-- Price Column -->
         <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let element"> {{element.productPrice}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.price | number}} </td>
         </ng-container>
 
         <!-- Action Column -->
@@ -36,5 +46,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements" />
+    <div *ngIf="loading" class="loading">
+        <mat-progress-spinner mode="indeterminate" value="primary" />
+    </div>
+
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements" /> -->
 </div>

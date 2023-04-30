@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { DOCUMENT } from '@angular/common';
-
-// Change this when you have backend 
-const AUTH_API = 'http://localhost:8080/api/auth/';
-
+import { APP_SERVICE_CONFIG } from '../appConfig/appConfig.service';
+import { AppConfig } from '../appConfig/appConfig.interface';
+import { ResponseDTO } from './dtos/response.dto';
+import jwt_decode from 'jwt-decode';
 
 
 @Injectable({
@@ -13,17 +13,12 @@ const AUTH_API = 'http://localhost:8080/api/auth/';
 })
 export class AuthService {
 
-  private SESSION_NAME = 'opfa_token'
+  private COOKIE_NAME = 'op_hp'
 
-  constructor(private cookieService: CookieService, private http: HttpClient, @Inject(DOCUMENT) private window: Document) { }
+  constructor(private cookieService: CookieService, private http: HttpClient, @Inject(DOCUMENT) private window: Document, @Inject(APP_SERVICE_CONFIG) private config: AppConfig,) { }
 
   login(email: string, password: string) {
-    this.addToken('logged')
-    return true
-    // return this.http.post(AUTH_API, {
-    //   email,
-    //   password
-    // })
+    return this.http.post<ResponseDTO<string>>(`${this.config.apiEndpoint}/login`, { email: email, password: password })
   }
 
   signUp(signUpData: {
@@ -32,9 +27,7 @@ export class AuthService {
     email: string,
     password: string
   }) {
-    // const token = this.http.post(AUTH_API, signUpData)
-    this.addToken('logged')
-    return true
+    return this.http.post<ResponseDTO<string>>(`${this.config.apiEndpoint}/signup`, { ...signUpData })
   }
 
   logout() {
@@ -43,18 +36,23 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.cookieService.get(this.SESSION_NAME) !== ''
-  }
-
-  removeToken() {
-    this.cookieService.delete(this.SESSION_NAME)
+    return this.getToken() !== ''
   }
 
   addToken(token: string) {
-    this.cookieService.set(this.SESSION_NAME, token)
+    this.cookieService.set(this.COOKIE_NAME, token)
+  }
+
+  removeToken() {
+    this.cookieService.delete(this.COOKIE_NAME)
   }
 
   getToken() {
-    return this.cookieService.get(this.SESSION_NAME)
+    return this.cookieService.get(this.COOKIE_NAME)
+  }
+
+  getUserDetailsFromToken(): { _id: string, firstName: string } {
+    const token = this.getToken()
+    return jwt_decode(token)
   }
 }

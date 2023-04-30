@@ -1,29 +1,29 @@
 <div>
     <h1>Here is a list of some of our available products</h1>
 
-    <div class="card-container">
-
-        <mat-card class="card">
-            <img mat-card-image class="card-img" src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                alt="Photo of a Shiba Inu">
+    <div class="card-container" *ngIf="!loading">
+        <mat-card *ngFor="let product of products" class="card">
+            <img mat-card-image class="card-img" src={{product.imageUrl}} alt={{product.name}}>
             <mat-card-content class="card-content">
                 <div>
-                    <h2>iphone XS
+                    <h2>{{product.name}}
                     </h2>
-                    <p>4 days ago</p>
+                    <p>{{product.createdAt | date}}</p>
                 </div>
-                <p>The Apple iPhone XS is available in 3 colors with 64GB memory. Shoot amazing videos, The Apple iPhone
-                    XS is available in 3 colors with 64GB memory. Shoot amazing videos... </p>
-                <a routerLink="productId" mat-button color="primary">View More</a>
+                <p>{{product.description.substring(0,155)}} </p>
+                <a routerLink={{product._id}} mat-button color="primary">View More</a>
                 <div>
                     <div> </div>
                     <div>
-                        <p> Created by, Olutunde</p>
+                        <p> Created by, {{product.createdBy.firstName}}</p>
                     </div>
                 </div>
-
             </mat-card-content>
         </mat-card>
-
     </div>
+
+    <div *ngIf="loading" class="loading">
+        <mat-progress-spinner mode="indeterminate" value="primary" />
+    </div>
+
 </div>
