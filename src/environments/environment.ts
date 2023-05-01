@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiEndpoint: 'https://openfabric-api.herokuapp.com/api/v1'
+    apiEndpoint: 'https://quixotic-card-385407.uc.r.appspot.com/api/v1'
 };
