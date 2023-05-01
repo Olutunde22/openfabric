@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { DOCUMENT } from '@angular/common';
 import { APP_SERVICE_CONFIG } from '../appConfig/appConfig.service';
 import { AppConfig } from '../appConfig/appConfig.interface';
 import { ResponseDTO } from './dtos/response.dto';
 import jwt_decode from 'jwt-decode';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class AuthService {
 
   private COOKIE_NAME = 'op_hp'
 
-  constructor(private cookieService: CookieService, private http: HttpClient, @Inject(DOCUMENT) private window: Document, @Inject(APP_SERVICE_CONFIG) private config: AppConfig,) { }
+  constructor(private cookieService: CookieService, private http: HttpClient, @Inject(APP_SERVICE_CONFIG) private config: AppConfig, private router: Router) { }
 
   login(email: string, password: string) {
     return this.http.post<ResponseDTO<string>>(`${this.config.apiEndpoint}/login`, { email: email, password: password })
@@ -32,7 +32,7 @@ export class AuthService {
 
   logout() {
     this.removeToken()
-    this.window.location.reload()
+    this.router.navigateByUrl('/')
   }
 
   isLoggedIn() {
@@ -40,7 +40,9 @@ export class AuthService {
   }
 
   addToken(token: string) {
-    this.cookieService.set(this.COOKIE_NAME, token)
+    this.cookieService.set(this.COOKIE_NAME, token, {
+      secure: true
+    })
   }
 
   removeToken() {
